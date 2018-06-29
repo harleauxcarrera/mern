@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 //@routes GET api/user/tests
 //@desc Tests user route
 //@access Public
-router.get("/test", (req, res) => res.json({ msg: "users Works" }));
+router.get("/testme", (req, res) => res.json({ msg: "Users Page Works" }));
 
 //@routes GET api/user/register
 //@desc Register user
@@ -27,16 +27,14 @@ router.post("/register", (req, res) => {
         avatar,
         password: req.body.password
       });
-      bcrypt.getSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.passWord, salt, (err, hash) => {
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
           newUser
             .save()
             .then(user => res.json(user))
-            .catch(function() {
-              console.log("Promise Rejected");
-            });
+            .catch(err => console.log(err));
         });
       });
     }
