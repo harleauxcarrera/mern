@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import store from './store';
 import Navbar from './comps/layout/Navbar';
 import Footer from './comps/layout/Footer';
 import Landing from './comps/layout/Landing';
@@ -9,7 +9,7 @@ import Register from './comps/auth/Register';
 import Login from './comps/auth/Login';
 import "./App.css";
 
-const store = createStore(() => [], {}, applyMiddleware());
+
 class App extends Component {
   render() {
     return (
