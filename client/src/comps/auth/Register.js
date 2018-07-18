@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+//for http requests
 import axios from 'axios';
+//for css
 import classnames from 'classnames'
+//used for connecting redux to a component
 import {connect} from 'react-redux'
+//import action
 import {registerUser}  from '../../actions/authActions'
 class Register extends Component {
   constructor(){
@@ -33,8 +38,11 @@ class Register extends Component {
      password: this.state.password,
      password2: this.state.password2
    }
+   //test user is being created
    console.log(newUser);
-  //make action request to ation creator to handle the submit form
+
+  //make action request  to handle the submit form 
+  //all component actions accessed thru this.props...
   this.props.registerUser(newUser);
   }
 
@@ -42,6 +50,8 @@ class Register extends Component {
   render() {
   //get errors to display below input fields
   const {errors} = this.state; 
+    //destructuring
+  const { user } = this.props.auth;
     return (
       <div>
         <div className="register">
@@ -114,4 +124,18 @@ class Register extends Component {
     )
   }
 }
-export  default connect(null, {registerUser})(Register);
+
+//Include Required PropTypes
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+//GET AUTH STATE INTO THIS COMPONENT 
+const mapStateToProps = (state) => ({
+  auth: state.auth //.auth comes from index.js in reducers dir
+});
+//use connect from react-redux to connect redux to components
+// here we pass mapStateToProps to have access to the auth state from authreducer
+// and pass the registerUser action
+export  default connect(mapStateToProps, {registerUser})(Register);
