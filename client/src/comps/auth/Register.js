@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-//for http requests
-import axios from 'axios';
+import {withRouter} from 'react-router-dom' //will help with redirect after registering
+
 //for css
 import classnames from 'classnames'
 //used for connecting redux to a component
@@ -22,6 +22,15 @@ class Register extends Component {
       this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
+
+  //this method allows use to populate the component error state from redux state
+  componentWillReceiveProps(nextProps){
+    if(nextProps.errors){
+      this.setState({errors: nextProps.errors})
+    }
+
+  }
+
   //detect input field changes
   onChange (e) {
     this.setState({[e.target.name]: e.target.value})
@@ -43,15 +52,15 @@ class Register extends Component {
 
   //make action request  to handle the submit form 
   //all component actions accessed thru this.props...
-  this.props.registerUser(newUser);
+  this.props.registerUser(newUser, this.props.history);
   }
 
   
   render() {
   //get errors to display below input fields
   const {errors} = this.state; 
-    //destructuring
-  const { user } = this.props.auth;
+   
+  
     return (
       <div>
         <div className="register">
@@ -128,14 +137,16 @@ class Register extends Component {
 //Include Required PropTypes
 Register.propTypes = {
   registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 //GET AUTH STATE INTO THIS COMPONENT 
 const mapStateToProps = (state) => ({
-  auth: state.auth //.auth comes from index.js in reducers dir
+  auth: state.auth, //.auth comes from index.js in reducers dir
+  errors: state.errors
 });
 //use connect from react-redux to connect redux to components
 // here we pass mapStateToProps to have access to the auth state from authreducer
 // and pass the registerUser action
-export  default connect(mapStateToProps, {registerUser})(Register);
+export  default connect(mapStateToProps, {registerUser})(withRouter(Register)); 
