@@ -18,7 +18,7 @@ import CreateProfile from "./comps/create-profile/CreateProfile";
 
 import "./App.css";
 
-//CHECK FOR TOKEN (token disables when page refreshes)//
+//CHECK FOR TOKEN (token disables when page refreshes) (this needs to be fixed)//
 if (localStorage.jwtToken) {
   //set auth token header
   setAuthToken(localStorage.jwtToken);
@@ -29,6 +29,8 @@ if (localStorage.jwtToken) {
 
   //check for expired token
   const currentTime = Date.now() / 1000;
+  console.log("Current Time:", currentTime);
+  console.log("Decoded.exp: ", decoded.exp);
   if (decoded.exp < currentTime) {
     //logout user
     store.dispatch(logoutUser());
