@@ -16,6 +16,9 @@ import Login from "./comps/auth/Login";
 import Dashboard from "./comps/dashboard/Dashboard";
 import CreateProfile from "./comps/create-profile/CreateProfile";
 import EditProfile from "./comps/edit-profile/EditProfile";
+import AddExperience from "./comps/add-credentials/AddExperience";
+import AddEducation from "./comps/add-credentials/AddEducation";
+import Profiles from "./comps/profiles/Profiles";
 
 import "./App.css";
 
@@ -53,6 +56,7 @@ class App extends Component {
             <div className="conatiner">
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/profiles" component={Profiles} />
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
@@ -68,6 +72,20 @@ class App extends Component {
                   exact
                   path="/edit-profile"
                   component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-experience"
+                  component={AddExperience}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-education"
+                  component={AddEducation}
                 />
               </Switch>
               <Footer />

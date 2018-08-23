@@ -5,6 +5,8 @@ import { getCurrentProfile, deleteAccount } from "../../actions/profileActions";
 import Spinner from "../common/Spinner";
 import { Link } from "react-router-dom";
 import ProfileActions from "./ProfileActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
 class Dashboard extends Component {
   //lifeCycle methods get called as soon as the component is rendered to the DOM
@@ -37,7 +39,10 @@ class Dashboard extends Component {
               </Link>
             </p>
             <ProfileActions />
-            {/*Tofo: experience and education*/}
+            <Experience experience={profile.experience} />
+
+            <Education education={profile.education} />
+
             <div style={{ marginBottom: "60px" }} />
             <button
               onClick={this.onDeleteClick.bind(this)}
